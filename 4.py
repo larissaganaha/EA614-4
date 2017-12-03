@@ -31,7 +31,7 @@ Y = np.convolve(X, H, "full");
 Fig = plt.figure();
 plt.stem(np.arange(0, 19/Size, 1/Size), Y);
 plt.xlabel("N");
-plt.ylabel("X * H");
+plt.ylabel("Y = X * H");
 plt.title("c) Convolution");
 plt.grid(True);
 plt.show();
@@ -76,4 +76,26 @@ plt.grid(True);
 plt.show();
 
 #f)
+H = [0]*Size;
+H[int(0.25*Size)] = 1;
+FFTH = np.fft.fft(H);
+SpectrumY = FFTX * FFTH;
+Fig, F = plt.subplots(2, sharex=True);
+F[0].stem(K, abs(np.concatenate((SpectrumY[int(Size/2):Size], SpectrumY[0:int(Size/2)]))));
+F[0].set_title("|FFTY|");
+plt.grid(True);
+F[1].stem(K, np.angle(SpectrumY, deg=True));
+F[1].set_title("Y Phase[°]");\
+plt.xlabel("K[Hz]");
+plt.grid(True);
+plt.show();
 
+#g)
+Y_= np.fft.ifft(SpectrumY);
+Fig = plt.figure();
+plt.stem(np.arange(0, 19/Size, 1/Size), Y);
+plt.xlabel("N");
+plt.ylabel("Y'[N]");
+plt.title("a) Recovered 1 Hz Sawtooth");
+plt.grid(True);
+plt.show();
