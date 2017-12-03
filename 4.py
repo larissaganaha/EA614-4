@@ -91,11 +91,28 @@ plt.grid(True);
 plt.show();
 
 #g)
-Y_= np.fft.ifft(SpectrumY);
+Y_ = np.fft.ifft(SpectrumY);
 Fig = plt.figure();
-plt.stem(np.arange(0, 19/Size, 1/Size), Y);
+plt.stem(np.arange(0, 1, 1/Size), abs(Y_));
 plt.xlabel("N");
 plt.ylabel("Y'[N]");
-plt.title("a) Recovered 1 Hz Sawtooth");
+plt.title("g) Recovered 1 Hz Sawtooth");
 plt.grid(True);
+plt.show();
+
+#h)
+SpectrumY = np.concatenate((FFTX[0:6], [0]*7, FFTX[6:12])) * np.concatenate((FFTH[0:6], [0]*7, FFTH[6:12]));
+Y__ = np.fft.ifft(SpectrumY);
+
+Fig, F = plt.subplots(3, sharex=True);
+F[0].stem(np.arange(0, 19/Size, 1/Size), Y);
+F[0].set_title("Y[N]");
+plt.grid(True);
+F[1].stem(np.arange(0, 1, 1/Size), Y_);
+F[1].set_title("Y'[N]");
+plt.grid(True);
+F[2].stem(np.arange(0, 19/Size, 1/Size), Y__);
+F[2].set_title("Y''[N]");
+plt.grid(True);
+plt.xlabel("N");
 plt.show();
